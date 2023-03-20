@@ -2,4 +2,9 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
-return {}
+return {
+  "nvim-treesitter/nvim-treesitter-context",
+  "tpope/vim-surround",
+  "windwp/nvim-autopairs",
+  "ThePrimeagen/vim-be-good",
+}
