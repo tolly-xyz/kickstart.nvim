@@ -7,4 +7,5 @@ return {
   "tpope/vim-surround",
   "windwp/nvim-autopairs",
   "ThePrimeagen/vim-be-good",
+  "ThePrimeagen/harpoon",
 }

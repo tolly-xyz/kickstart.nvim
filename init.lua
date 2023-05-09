@@ -411,7 +411,16 @@ local servers = {
   -- clangd = {},
   -- gopls = {},
   -- pyright = {},
-  -- rust_analyzer = {},
+  rust_analyzer = {
+    cargo = {
+      features = 'all'
+    },
+    checkOnSave = {
+      enable = true,
+      command = 'clippy',
+      features = 'all'
+    }
+  },
   -- tsserver = {},
 
   lua_ls = {

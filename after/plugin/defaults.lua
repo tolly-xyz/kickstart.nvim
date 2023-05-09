@@ -68,3 +68,12 @@ vim.cmd([[
 --  return vim.cmd("command -nargs=? Python bot " .. args .. "split | terminal python")
 -- end, {nargs="?"})
 
+local run_cmd_map = {
+  python = '!python %',
+  rust = '!cargo run',
+}
+
+remap("n", "<leader>run", function()
+  local f = vim.bo.filetype
+  vim.cmd(run_cmd_map[f] or string.format('echo "No run command given for %s files."', f))
+end)
