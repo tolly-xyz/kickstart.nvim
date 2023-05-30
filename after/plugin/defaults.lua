@@ -72,8 +72,16 @@ local run_cmd_map = {
   python = '!python %',
   rust = '!cargo run',
 }
-
 remap("n", "<leader>run", function()
   local f = vim.bo.filetype
-  vim.cmd(run_cmd_map[f] or string.format('echo "No run command given for %s files."', f))
+  vim.cmd(run_cmd_map[f] or string.format('echo "No run command for %s files."', f))
+end)
+
+local fmt_cmd_map = {
+  rust = '!cargo fmt',
+  json = '%!python -m json.tool',
+}
+remap("n", "<leader>fmt", function()
+  local f = vim.bo.filetype
+  vim.cmd(fmt_cmd_map[f] or string.format('echo "No format command for %s files."', f))
 end)
