@@ -3,9 +3,14 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  "nvim-treesitter/nvim-treesitter-context",
-  "tpope/vim-surround",
-  "windwp/nvim-autopairs",
-  "ThePrimeagen/vim-be-good",
-  "ThePrimeagen/harpoon",
+  'nvim-treesitter/nvim-treesitter-context',
+  'tpope/vim-surround',
+  'tpope/vim-fugitive',
+  'windwp/nvim-autopairs',
+  'ThePrimeagen/vim-be-good',
+  {
+    'ThePrimeagen/harpoon',
+    branch = 'harpoon2',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
 }

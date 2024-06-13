@@ -1,10 +1,37 @@
-local mark = require('harpoon.mark')
-local ui = require('harpoon.ui')
+local harpoon = require 'harpoon'
+local remap = vim.keymap.set
 
-vim.keymap.set('n', '<leader>h', mark.add_file)
-vim.keymap.set('n', '<C-h>', ui.toggle_quick_menu)
+-- REQUIRED
+harpoon:setup {}
+-- REQUIRED
 
-vim.keymap.set('n', '<leader>1', function() ui.nav_file(1) end)
-vim.keymap.set('n', '<leader>2', function() ui.nav_file(2) end)
-vim.keymap.set('n', '<leader>3', function() ui.nav_file(3) end)
-vim.keymap.set('n', '<leader>4', function() ui.nav_file(4) end)
+-- Add current buffer to harpoon list
+remap('n', '<leader>h', function()
+  harpoon:list():add()
+end)
+
+-- Open harpoon list menu
+remap('n', '<M-h>', function()
+  harpoon.ui:toggle_quick_menu(harpoon:list())
+end)
+
+---@param n integer The list number to navigate to
+local nav_file = function(n)
+  harpoon:list():select(n)
+end
+
+remap('n', '<leader>1', function()
+  nav_file(1)
+end)
+
+remap('n', '<leader>2', function()
+  nav_file(2)
+end)
+
+remap('n', '<leader>3', function()
+  nav_file(3)
+end)
+
+remap('n', '<leader>4', function()
+  nav_file(4)
+end)
