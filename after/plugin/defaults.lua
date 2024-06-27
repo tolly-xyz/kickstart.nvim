@@ -15,3 +15,5 @@ set.shiftwidth = TAB_WIDTH
 set.softtabstop = TAB_WIDTH
 
 set.incsearch = true
+
+vim.opt.signcolumn = 'yes:2'

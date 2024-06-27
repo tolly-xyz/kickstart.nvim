@@ -7,7 +7,6 @@ vim.diagnostic.config {
   float = {
     source = true,
   },
-  severity_sort = true,
   signs = {
     text = {
       [ERROR] = '',
@@ -18,3 +17,8 @@ vim.diagnostic.config {
   },
   virtual_text = false,
 }
+
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+  -- Use a sharp border with `FloatBorder` highlights
+  border = 'single',
+})

@@ -15,62 +15,53 @@ remap('n', 'n', 'nzz')
 remap('n', 'N', 'Nzz')
 
 -- yank to system clipboard
-remap('', '<leader>y', '"+y')
+remap('', '<leader>y', '"+y', { desc = '[Y]ank to system clipboard' })
 
 -- delete to blackhole instead of default register
-remap('', '<leader>d', '"_d')
+remap('', '<leader>d', '"_d', { desc = '[D]elete to black hole register' })
 
 -- paste over highlighted text, keep pasted text in register
-remap('x', '<leader>p', '"_dP')
+remap('x', '<leader>p', '"_dP', { desc = '[P]aste over selection, delete to black hole register' })
 
--- telescope
-remap('n', '<leader>saf', function()
-  require('telescope.builtin').find_files {
-    find_command = { 'rg', '--files', '--hidden', '--glob', '!**/.git/*' },
-  }
-end, { desc = '[S]earch [A]ll [F]iles' })
-
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-
-local function move_win_or_pane(direction)
-  local win_num = vim.fn.winnr()
-
-  pcall(vim.cmd.wincmd, direction)
-
-  -- If the vim window number changed, exit
-  if win_num ~= vim.fn.winnr() then
-    return
+-- go to next quickfix list item
+remap('n', ']q', function()
+  if vim.fn.getqflist({ winid = 0 }).winid > 0 then
+    vim.cmd.cnext()
   end
+end, { desc = 'Next [q]uickfix list item' })
 
-  -- If the vim window didn't change, switch tmux pane
-  local tmux_map = {
-    h = '-L',
-    j = '-D',
-    k = '-U',
-    l = '-R',
-  }
+-- go to prev quickfix list item
+remap('n', '[q', function()
+  if vim.fn.getqflist({ winid = 0 }).winid > 0 then
+    vim.cmd.cprevious()
+  end
+end, { desc = 'Previous [q]uickfix list item' })
 
-  local tmux_direction = tmux_map[direction]
-  pcall(vim.system, { 'tmux', 'select-pane', tmux_direction })
-end
+-- go to next location list item
+remap('n', ']l', function()
+  if vim.fn.getqflist({ winid = 0 }).winid > 0 then
+    vim.cmd.lnext()
+  end
+end, { desc = 'Next [l]ocation list item' })
 
-remap('n', '<C-h>', function()
-  move_win_or_pane 'h'
-end, { desc = 'Move focus to the left window' })
+-- go to prev location list item
+remap('n', '[l', function()
+  if vim.fn.getloclist(0, { winid = 0 }).winid > 0 then
+    vim.cmd.lprevious()
+  end
+end, { desc = 'Previous [l]ocation list item' })
 
-remap('n', '<C-l>', function()
-  move_win_or_pane 'l'
-end, { desc = 'Move focus to the right window' })
+local ts_repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
 
-remap('n', '<C-j>', function()
-  move_win_or_pane 'j'
-end, { desc = 'Move focus to the lower window' })
-remap('n', '<C-k>', function()
-  move_win_or_pane 'k'
-end, { desc = 'Move focus to the upper window' })
+remap({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
+remap({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_opposite)
 
--- Remap this so that it doesn't interfere with <C-l> above
-remap('n', '<C-q>', '<Plug>NetrwRefresh')
+-- Optionally, make builtin f, F, t, T also repeatable with ; and ,
+remap({ 'n', 'x', 'o' }, 'f', ts_repeat_move.builtin_f_expr, { expr = true })
+remap({ 'n', 'x', 'o' }, 'F', ts_repeat_move.builtin_F_expr, { expr = true })
+remap({ 'n', 'x', 'o' }, 't', ts_repeat_move.builtin_t_expr, { expr = true })
+remap({ 'n', 'x', 'o' }, 'T', ts_repeat_move.builtin_T_expr, { expr = true })
+
+local next_buffer_repeat, prev_buffer_repeat = ts_repeat_move.make_repeatable_move_pair(vim.cmd.bnext, vim.cmd.bprevious)
+remap('n', ']b', next_buffer_repeat, { desc = 'Next [b]uffer' })
+remap('n', '[b', prev_buffer_repeat, { desc = 'Previous [b]uffer' })

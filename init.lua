@@ -126,7 +126,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Keep signcolumn on by default
-vim.opt.signcolumn = 'yes'
+-- vim.opt.signcolumn = 'yes'
 
 -- Decrease update time
 vim.opt.updatetime = 250
@@ -249,12 +249,67 @@ require('lazy').setup({
     'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
+        add = { text = '󱇬' },
+        change = { text = '󰏫' },
+        delete = { text = '󱘹', show_count = true },
+        topdelete = { text = '󰞕', show_count = true },
+        changedelete = { text = '󰷨', show_count = true },
       },
+      sign_priority = 10,
+      numhl = true,
+      linehl = true,
+      on_attach = function(bufnr)
+        local gitsigns = require 'gitsigns'
+
+        local function map(mode, l, r, opts)
+          opts = opts or {}
+          opts.buffer = bufnr
+          vim.keymap.set(mode, l, r, opts)
+        end
+
+        -- Navigation
+        map('n', ']c', function()
+          if vim.wo.diff then
+            vim.cmd.normal { ']c', bang = true }
+          else
+            gitsigns.nav_hunk 'next'
+          end
+        end, { desc = 'next [c]hange' })
+
+        map('n', '[c', function()
+          if vim.wo.diff then
+            vim.cmd.normal { '[c', bang = true }
+          else
+            gitsigns.nav_hunk 'prev'
+          end
+        end, { desc = 'previous [c]hange' })
+
+        -- Actions
+        map('n', '<leader>hs', gitsigns.stage_hunk, { desc = '[s]tage hunk' })
+        map('n', '<leader>hr', gitsigns.reset_hunk, { desc = '[r]eset hunk' })
+        map('v', '<leader>hs', function()
+          gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
+        end, { desc = '[s]tage' })
+        map('v', '<leader>hr', function()
+          gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
+        end, { desc = '[r]eset' })
+        map('n', '<leader>hS', gitsigns.stage_buffer, { desc = '[S]tage buffer' })
+        map('n', '<leader>hR', gitsigns.reset_buffer, { desc = '[R]eset buffer' })
+        map('n', '<leader>hu', gitsigns.undo_stage_hunk, { desc = '[u]ndo stage hunk' })
+        map('n', '<leader>hp', gitsigns.preview_hunk, { desc = '[p]review hunk' })
+        map('n', '<leader>hb', function()
+          gitsigns.blame_line { full = true }
+        end, { desc = '[b]lame current line' })
+        map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[t]oggle [b]lame line' })
+        map('n', '<leader>hd', gitsigns.diffthis, { desc = '[d]iffthis' })
+        map('n', '<leader>hD', function()
+          gitsigns.diffthis '~'
+        end, { desc = '[D]iffthis ~' })
+        map('n', '<leader>td', gitsigns.toggle_deleted, { desc = '[t]oggle [d]eleted' })
+
+        -- Text object
+        map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'git change [h]unk' })
+      end,
     },
   },
 
@@ -542,7 +597,7 @@ require('lazy').setup({
           -- This may be unwanted, since they displace some of your code
           if client and client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
             map('<leader>th', function()
-              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+              vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {})
             end, '[T]oggle Inlay [H]ints')
           end
         end,
@@ -606,7 +661,27 @@ require('lazy').setup({
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
+        'actionlint',
+        'bashls',
+        'cssls',
+        'docker_compose_language_service',
+        'dockerls',
+        'emmet_ls',
+        'eslint',
+        'eslint_d',
+        'html',
+        'htmx',
+        'jsonlint',
+        'prettier',
+        'prettierd',
+        'ruff_lsp',
+        'shellcheck',
+        'shellharden',
+        'shfmt',
+        'stylua',
+        'terraformls',
+        'vimls',
+        'yamlls',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -787,7 +862,7 @@ require('lazy').setup({
       vim.cmd.colorscheme 'tokyonight-night'
 
       -- You can configure highlights by doing something like:
-      vim.cmd.hi 'Comment gui=none'
+      vim.cmd.hi 'Comment gui=bold'
     end,
   },
 
@@ -846,6 +921,30 @@ require('lazy').setup({
         additional_vim_regex_highlighting = { 'ruby' },
       },
       indent = { enable = true, disable = { 'ruby' } },
+      textobjects = {
+        select = {
+          enable = true,
+          lookahead = true,
+          keymaps = {
+            -- You can use the capture groups defined in textobjects.scm
+            ['af'] = { query = '@function.outer', desc = 'Select [a]round [f]unction region' },
+            ['if'] = { query = '@function.inner', desc = 'Select [i]nside [f]unction region' },
+            ['ac'] = { query = '@class.outer', desc = 'Select [a]round [c]lass region' },
+            ['ic'] = { query = '@class.inner', desc = 'Select [i]nside [c]lass region' },
+            -- You can also use captures from other query groups like `locals.scm`
+            -- ['as'] = { query = '@scope', query_group = 'locals', desc = 'Select language scope' },
+          },
+        },
+        swap = {
+          enable = true,
+          swap_next = {
+            ['<leader>a'] = { query = '@parameter.inner', desc = 'Swap next [a]rgument' },
+          },
+          swap_previous = {
+            ['<leader>A'] = { query = '@parameter.inner', desc = 'Swap previous [a]rgument' },
+          },
+        },
+      },
     },
     config = function(_, opts)
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`

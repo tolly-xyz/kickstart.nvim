@@ -3,10 +3,24 @@
 --
 -- See the kickstart.nvim README for more information
 return {
+  'nvim-treesitter/nvim-treesitter-textobjects',
   'nvim-treesitter/nvim-treesitter-context',
-  'tpope/vim-surround',
+  {
+    'kylechui/nvim-surround',
+    version = '*',
+    event = 'VeryLazy',
+    config = function()
+      require('nvim-surround').setup()
+    end,
+  },
   'tpope/vim-fugitive',
-  'windwp/nvim-autopairs',
+  -- 'tpope/vim-surround',
+  -- 'tpope/vim-repeat',
+  {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+  },
   'ThePrimeagen/vim-be-good',
   {
     'ThePrimeagen/harpoon',
