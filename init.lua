@@ -743,13 +743,13 @@ require('lazy').setup({
         -- Conform can also run multiple formatters sequentially
         python = { 'isort', 'black' },
         --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        html = { { 'prettierd', 'prettier' } },
-        javascript = { { 'prettierd', 'prettier' } },
-        typescript = { { 'prettierd', 'prettier' } },
-        jsx = { { 'prettierd', 'prettier' } },
-        markdown = { { 'prettierd', 'prettier' } },
+        -- You can tell conform to run *until* a formatter is found.
+        html = { 'prettierd', 'prettier', stop_after_first = true },
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
+        jsx = { 'prettierd', 'prettier', stop_after_first = true },
+        tsx = { 'prettierd', 'prettier', stop_after_first = true },
+        markdown = { 'prettierd', 'prettier', stop_after_first = true },
 
         nix = { 'nixpkgs_fmt' },
       },
