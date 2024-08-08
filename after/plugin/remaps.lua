@@ -14,6 +14,9 @@ remap('n', '<C-d>', '<C-d>zz')
 remap('n', 'n', 'nzz')
 remap('n', 'N', 'Nzz')
 
+-- Open netrw
+remap('n', '-', ':Ex<CR>')
+
 -- yank to system clipboard
 remap('', '<leader>y', '"+y', { desc = '[Y]ank to system clipboard' })
 
@@ -23,34 +26,7 @@ remap('', '<leader>d', '"_d', { desc = '[D]elete to black hole register' })
 -- paste over highlighted text, keep pasted text in register
 remap('x', '<leader>p', '"_dP', { desc = '[P]aste over selection, delete to black hole register' })
 
--- go to next quickfix list item
-remap('n', ']q', function()
-  if vim.fn.getqflist({ winid = 0 }).winid > 0 then
-    vim.cmd.cnext()
-  end
-end, { desc = 'Next [q]uickfix list item' })
-
--- go to prev quickfix list item
-remap('n', '[q', function()
-  if vim.fn.getqflist({ winid = 0 }).winid > 0 then
-    vim.cmd.cprevious()
-  end
-end, { desc = 'Previous [q]uickfix list item' })
-
--- go to next location list item
-remap('n', ']l', function()
-  if vim.fn.getqflist({ winid = 0 }).winid > 0 then
-    vim.cmd.lnext()
-  end
-end, { desc = 'Next [l]ocation list item' })
-
--- go to prev location list item
-remap('n', '[l', function()
-  if vim.fn.getloclist(0, { winid = 0 }).winid > 0 then
-    vim.cmd.lprevious()
-  end
-end, { desc = 'Previous [l]ocation list item' })
-
+-- Repeatable commands
 local ts_repeat_move = require 'nvim-treesitter.textobjects.repeatable_move'
 
 remap({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
@@ -62,6 +38,38 @@ remap({ 'n', 'x', 'o' }, 'F', ts_repeat_move.builtin_F_expr, { expr = true })
 remap({ 'n', 'x', 'o' }, 't', ts_repeat_move.builtin_t_expr, { expr = true })
 remap({ 'n', 'x', 'o' }, 'T', ts_repeat_move.builtin_T_expr, { expr = true })
 
-local next_buffer_repeat, prev_buffer_repeat = ts_repeat_move.make_repeatable_move_pair(vim.cmd.bnext, vim.cmd.bprevious)
-remap('n', ']b', next_buffer_repeat, { desc = 'Next [b]uffer' })
-remap('n', '[b', prev_buffer_repeat, { desc = 'Previous [b]uffer' })
+-- go to next quickfix list item
+local function next_qflist()
+  if vim.fn.getqflist({ winid = 0 }).winid > 0 then
+    vim.cmd.cnext()
+  end
+end
+
+-- go to prev quickfix list item
+local function prev_qflist()
+  if vim.fn.getqflist({ winid = 0 }).winid > 0 then
+    vim.cmd.cprevious()
+  end
+end
+
+local next_qflist_repeat, prev_qflist_repeat = ts_repeat_move.make_repeatable_move_pair(next_qflist, prev_qflist)
+remap('n', ']q', next_qflist_repeat, { desc = 'Next [q]uickfix list item' })
+remap('n', '[q', prev_qflist_repeat, { desc = 'Previous [q]uickfix list item' })
+
+-- go to next location list item
+local function next_loclist()
+  if vim.fn.getloclist(0, { winid = 0 }).winid > 0 then
+    vim.cmd.lnext()
+  end
+end
+
+-- go to prev location list item
+local function prev_loclist()
+  if vim.fn.getloclist(0, { winid = 0 }).winid > 0 then
+    vim.cmd.lprevious()
+  end
+end
+
+local next_loclist_repeat, prev_loclist_repeat = ts_repeat_move.make_repeatable_move_pair(next_loclist, prev_loclist)
+remap('n', ']l', next_loclist_repeat, { desc = 'Next [l]ocation list item' })
+remap('n', '[l', prev_loclist_repeat, { desc = 'Previous [l]ocation list item' })

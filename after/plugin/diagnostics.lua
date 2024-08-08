@@ -6,6 +6,7 @@ local HINT = vim.diagnostic.severity.HINT
 vim.diagnostic.config {
   float = {
     source = true,
+    border = 'single',
   },
   signs = {
     text = {

@@ -16,4 +16,4 @@ set.softtabstop = TAB_WIDTH
 
 set.incsearch = true
 
-vim.opt.signcolumn = 'yes:2'
+set.signcolumn = 'yes:2'

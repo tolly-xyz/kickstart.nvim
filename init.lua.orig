@@ -747,8 +747,11 @@ require('lazy').setup({
         -- is found.
         html = { { 'prettierd', 'prettier' } },
         javascript = { { 'prettierd', 'prettier' } },
+<<<<<<< HEAD
         typescript = { { 'prettierd', 'prettier' } },
+=======
         jsx = { { 'prettierd', 'prettier' } },
+>>>>>>> 8a17e64 (fix conform syntax and other remaps)
         markdown = { { 'prettierd', 'prettier' } },
 
         nix = { 'nixpkgs_fmt' },

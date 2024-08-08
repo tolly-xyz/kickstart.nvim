@@ -21,7 +21,6 @@ return {
     event = 'InsertEnter',
     config = true,
   },
-  'ThePrimeagen/vim-be-good',
   {
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
