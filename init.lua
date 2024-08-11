@@ -665,10 +665,8 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'actionlint',
         'bashls',
-        'cssls',
         'docker_compose_language_service',
         'dockerls',
-        'emmet_ls',
         'eslint',
         'eslint_d',
         'html',
