@@ -40,4 +40,7 @@ return {
       'nvim-tree/nvim-web-devicons',
     },
   },
+  {
+    'ziglang/zig.vim',
+  },
 }
