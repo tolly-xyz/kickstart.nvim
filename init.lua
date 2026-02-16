@@ -326,7 +326,7 @@ require('lazy').setup({
   -- after the plugin has been loaded:
   --  config = function() ... end
 
-  {                     -- Useful plugin to show you pending keybinds.
+  { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
     config = function() -- This is the function that runs, AFTER loading
@@ -355,7 +355,7 @@ require('lazy').setup({
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
-    branch = '0.1.x',
+    version = '*',
     dependencies = {
       'nvim-lua/plenary.nvim',
       { -- If encountering errors, see telescope-fzf-native README for installation instructions
@@ -374,7 +374,7 @@ require('lazy').setup({
       { 'nvim-telescope/telescope-ui-select.nvim' },
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
-      { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
+      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -470,7 +470,7 @@ require('lazy').setup({
       },
     },
   },
-  { 'Bilal2453/luvit-meta',     lazy = true },
+  { 'Bilal2453/luvit-meta', lazy = true },
   {
     -- Main LSP Configuration
     'neovim/nvim-lspconfig',
@@ -482,7 +482,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP.
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim',       opts = {} },
+      { 'j-hui/fidget.nvim', opts = {} },
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
@@ -572,7 +572,7 @@ require('lazy').setup({
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
             local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
@@ -599,7 +599,7 @@ require('lazy').setup({
           -- code, if the language server you are using supports them
           --
           -- This may be unwanted, since they displace some of your code
-          if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+          if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
             map('<leader>th', function()
               vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
             end, '[T]oggle Inlay [H]ints')
@@ -639,16 +639,16 @@ require('lazy').setup({
           settings = {
             texlab = {
               build = {
-                args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '%f' },
                 forwardSearchAfter = true,
                 onSave = true,
               },
               forwardSearch = {
-                executable = "zathura",
-                args = { "--synctex-forward", "%l:1:%f", "%p" },
+                executable = 'zathura',
+                args = { '--synctex-forward', '%l:1:%f', '%p' },
               },
             },
-          }
+          },
         },
         zls = {
           settings = {
@@ -686,12 +686,12 @@ require('lazy').setup({
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'bashls',
-        'ruff_lsp',
-        'shellcheck',
-        'shfmt',
-        'stylua',
-        'vimls',
+        -- 'bashls',
+        -- 'ruff_lsp',
+        -- 'shellcheck',
+        -- 'shfmt',
+        -- 'stylua',
+        -- 'vimls',
       })
       require('mason-tool-installer').setup {} -- { ensure_installed = ensure_installed }
 
@@ -760,7 +760,7 @@ require('lazy').setup({
         tsx = { 'prettierd', 'prettier', stop_after_first = true },
         markdown = { 'prettierd', 'prettier', stop_after_first = true },
 
-        nix = { 'nixpkgs_fmt' },
+        nix = { 'alejandra' },
       },
     },
   },
