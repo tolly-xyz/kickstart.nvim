@@ -3,15 +3,17 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  'nvim-treesitter/nvim-treesitter-textobjects',
+  { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
+  {
+    'kiyoon/repeatable-move.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
+  },
   'nvim-treesitter/nvim-treesitter-context',
   {
     'kylechui/nvim-surround',
     version = '*',
     event = 'VeryLazy',
-    config = function()
-      require('nvim-surround').setup()
-    end,
+    config = function() require('nvim-surround').setup() end,
   },
   'tpope/vim-fugitive',
   -- 'tpope/vim-surround',
