@@ -27,18 +27,18 @@ remap('', '<leader>d', '"_d', { desc = '[D]elete to black hole register' })
 remap('x', '<leader>p', '"_dP', { desc = '[P]aste over selection, delete to black hole register' })
 
 -- Repeatable commands
-local ts_repeat_move = require 'nvim-treesitter-textobjects.repeatable_move'
+-- local ts_repeat_move = require 'nvim-treesitter-textobjects.repeatable_move'
 
-remap({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
-remap({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_opposite)
-
--- Optionally, make builtin f, F, t, T also repeatable with ; and ,
-remap({ 'n', 'x', 'o' }, 'f', ts_repeat_move.builtin_f_expr, { expr = true })
-remap({ 'n', 'x', 'o' }, 'F', ts_repeat_move.builtin_F_expr, { expr = true })
-remap({ 'n', 'x', 'o' }, 't', ts_repeat_move.builtin_t_expr, { expr = true })
-remap({ 'n', 'x', 'o' }, 'T', ts_repeat_move.builtin_T_expr, { expr = true })
-
-local repeat_move = require 'repeatable_move'
+-- remap({ 'n', 'x', 'o' }, ';', ts_repeat_move.repeat_last_move)
+-- remap({ 'n', 'x', 'o' }, ',', ts_repeat_move.repeat_last_move_opposite)
+--
+-- -- Optionally, make builtin f, F, t, T also repeatable with ; and ,
+-- remap({ 'n', 'x', 'o' }, 'f', ts_repeat_move.builtin_f_expr, { expr = true })
+-- remap({ 'n', 'x', 'o' }, 'F', ts_repeat_move.builtin_F_expr, { expr = true })
+-- remap({ 'n', 'x', 'o' }, 't', ts_repeat_move.builtin_t_expr, { expr = true })
+-- remap({ 'n', 'x', 'o' }, 'T', ts_repeat_move.builtin_T_expr, { expr = true })
+--
+-- local repeat_move = require 'repeatable_move'
 
 -- go to next quickfix list item
 local function next_qflist()
@@ -50,9 +50,9 @@ local function prev_qflist()
   if vim.fn.getqflist({ winid = 0 }).winid > 0 then vim.cmd.cprevious() end
 end
 
-local next_qflist_repeat, prev_qflist_repeat = repeat_move.make_repeatable_move_pair(next_qflist, prev_qflist)
-remap('n', ']q', next_qflist_repeat, { desc = 'Next [q]uickfix list item' })
-remap('n', '[q', prev_qflist_repeat, { desc = 'Previous [q]uickfix list item' })
+-- local next_qflist_repeat, prev_qflist_repeat = repeat_move.make_repeatable_move_pair(next_qflist, prev_qflist)
+-- remap('n', ']q', next_qflist_repeat, { desc = 'Next [q]uickfix list item' })
+-- remap('n', '[q', prev_qflist_repeat, { desc = 'Previous [q]uickfix list item' })
 
 -- go to next location list item
 local function next_loclist()
@@ -64,6 +64,6 @@ local function prev_loclist()
   if vim.fn.getloclist(0, { winid = 0 }).winid > 0 then vim.cmd.lprevious() end
 end
 
-local next_loclist_repeat, prev_loclist_repeat = repeat_move.make_repeatable_move_pair(next_loclist, prev_loclist)
-remap('n', ']l', next_loclist_repeat, { desc = 'Next [l]ocation list item' })
-remap('n', '[l', prev_loclist_repeat, { desc = 'Previous [l]ocation list item' })
+-- local next_loclist_repeat, prev_loclist_repeat = repeat_move.make_repeatable_move_pair(next_loclist, prev_loclist)
+-- remap('n', ']l', next_loclist_repeat, { desc = 'Next [l]ocation list item' })
+-- remap('n', '[l', prev_loclist_repeat, { desc = 'Previous [l]ocation list item' })

@@ -1,2 +1,2 @@
-vim.pack.add({'nvim-treesitter/nvim-treesitter-context'}, { src = 'nvim-treesitter/nvim-treesitter-textobjects', version = 'main' })
-vim.pack.add {'kiyoon/repeatable-move.nvim'} -- depends on textobjects
+vim.pack.add({'https://github.com/nvim-treesitter/nvim-treesitter-context', { src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects', version = 'main' }})
+vim.pack.add {'https://github.com/kiyoon/repeatable-move.nvim'} -- depends on textobjects
