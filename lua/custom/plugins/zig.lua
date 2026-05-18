@@ -1,1 +1,1 @@
-vim.pack.add 'ziglang/zig.vim'
+vim.pack.add {'ziglang/zig.vim'}
