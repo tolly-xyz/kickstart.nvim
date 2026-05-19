@@ -51,8 +51,8 @@ local function prev_qflist()
 end
 
 -- local next_qflist_repeat, prev_qflist_repeat = repeat_move.make_repeatable_move_pair(next_qflist, prev_qflist)
--- remap('n', ']q', next_qflist_repeat, { desc = 'Next [q]uickfix list item' })
--- remap('n', '[q', prev_qflist_repeat, { desc = 'Previous [q]uickfix list item' })
+remap('n', ']q', next_qflist, { desc = 'Next [q]uickfix list item' })
+remap('n', '[q', prev_qflist, { desc = 'Previous [q]uickfix list item' })
 
 -- go to next location list item
 local function next_loclist()
@@ -65,5 +65,5 @@ local function prev_loclist()
 end
 
 -- local next_loclist_repeat, prev_loclist_repeat = repeat_move.make_repeatable_move_pair(next_loclist, prev_loclist)
--- remap('n', ']l', next_loclist_repeat, { desc = 'Next [l]ocation list item' })
--- remap('n', '[l', prev_loclist_repeat, { desc = 'Previous [l]ocation list item' })
+remap('n', ']l', next_loclist, { desc = 'Next [l]ocation list item' })
+remap('n', '[l', prev_loclist, { desc = 'Previous [l]ocation list item' })
