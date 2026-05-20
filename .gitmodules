@@ -1,0 +1,3 @@
+[submodule "pack/dev/start/testicle.nvim"]
+	path = pack/dev/start/testicle.nvim
+	url = git@github.com:tolly-xyz/testicle.nvim.git

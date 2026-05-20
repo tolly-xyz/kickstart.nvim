@@ -1,6 +1,12 @@
 vim.pack.add {
   {
     src = 'https://github.com/kylechui/nvim-surround',
-    version = 'main',
+    version = vim.version.range '4.x',
+  },
+}
+
+require('nvim-surround').setup {
+  highlight = {
+    duration = 250,
   },
 }

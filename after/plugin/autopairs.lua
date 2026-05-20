@@ -1,5 +1,4 @@
--- local Rule = require 'nvim-autopairs.rule'
--- local npairs = require 'nvim-autopairs'
--- local cond = require 'nvim-autopairs.conds'
+local npairs = require 'nvim-autopairs'
+local Rule = require 'nvim-autopairs.rule'
 
--- npairs.add_rule(Rule('/**', '*/', { 'javascript', 'typescript' }))
+npairs.add_rules { Rule('/**', '*/', { 'javascript', 'typescript' }), Rule('<', '>', { 'rust' }) }

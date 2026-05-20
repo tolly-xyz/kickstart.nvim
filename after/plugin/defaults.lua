@@ -2,10 +2,7 @@ local set = vim.o
 local TAB_WIDTH = 4
 
 set.background = 'dark'
-set.mouse = ''
 
-set.number = true
-set.relativenumber = true
 set.scrolloff = 4
 
 set.expandtab = true
