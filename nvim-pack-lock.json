@@ -102,11 +102,6 @@
       "rev": "7d324792b7943e4aa16ad007212e6acc6f9fe335",
       "src": "https://github.com/nvim-telescope/telescope.nvim"
     },
-    "testicle": {
-      "rev": "12982a0f19e123c279471bd72ebf9ae7757b9f82",
-      "src": "file:///Users/zach/sandbox/testicle.nvim/",
-      "version": "'master'"
-    },
     "todo-comments.nvim": {
       "rev": "31e3c38ce9b29781e4422fc0322eb0a21f4e8668",
       "src": "https://github.com/folke/todo-comments.nvim"
